@@ -52,6 +52,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/onthitracnghiem_backend.jar"/>
+	<classpathentry kind="lib" path="libs/jaco-mp3-player-0.9.3.jar"/>
+	<classpathentry kind="lib" path="libs/jna-5.5.0.jar"/>
 	<classpathentry kind="lib" path="libs/KGradientPanel.jar"/>
+	<classpathentry kind="lib" path="libs/swing-jnafilechooser.jar"/>
+	<classpathentry kind="lib" path="libs/swingx-1.6.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

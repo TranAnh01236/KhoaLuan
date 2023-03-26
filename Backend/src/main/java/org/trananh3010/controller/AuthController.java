@@ -24,9 +24,7 @@ public class AuthController {
         if (user == null) {
 			return new MyHttpResponse(404, "Sai tài khoản", null);
 		}
-//        System.out.println(user);
     	if(user.getPassword().equals(info.get("password"))) {
-//    		System.out.println(user.toJson());
     		return new MyHttpResponse(200, "Đăng nhập thành công", user);
     	}
     	return new MyHttpResponse(404, "Sai mật khẩu", null);

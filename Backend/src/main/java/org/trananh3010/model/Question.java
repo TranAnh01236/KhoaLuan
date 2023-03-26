@@ -98,12 +98,12 @@ public class Question implements Serializable{
 		this.type = type;
 	}
 
-	public String getDescription() {
+	public String getExplain() {
 		return explain;
 	}
 
-	public void setDescription(String description) {
-		this.explain = description;
+	public void setExplain(String explain) {
+		this.explain = explain;
 	}
 
 	public String getImage() {
@@ -134,6 +134,10 @@ public class Question implements Serializable{
 		return answers;
 	}
 	
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
 	public void addAnswer(Answer answer) {
 		answers.add(answer);
 	}

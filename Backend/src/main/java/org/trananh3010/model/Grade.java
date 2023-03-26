@@ -86,7 +86,14 @@ public class Grade implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Grade [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return name;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Grade [id=" + id + ", name=" + name + ", description=" + description + "]";
+//	}
+	
+	
 	
 }

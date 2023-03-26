@@ -95,7 +95,7 @@ public class SubjectListView extends MyCustomPanel {
 				p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 
 				final JLabel l1 = new JLabel(subject.getName());
-				l1.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
+				l1.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
 				l1.setForeground(new Color(70, 70, 68));
 				l1.setBorder(new EmptyBorder(0, 0, 10, 0));
 

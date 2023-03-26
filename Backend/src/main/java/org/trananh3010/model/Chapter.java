@@ -98,8 +98,13 @@ public class Chapter implements Serializable{
 		this.lessons = new ArrayList<>();
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Chapter [id=" + id + ", name=" + name + ", description=" + description + ", subject=" + subject + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "Chapter [id=" + id + ", name=" + name + ", description=" + description + ", subject=" + subject + "]";
+		return name;
 	}
 }

@@ -89,7 +89,7 @@ public class LessonsListView extends MyCustomPanel{
 				p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 
 				final JLabel l1 = new JLabel(lesson.getName());
-				l1.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
+				l1.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
 				l1.setForeground(Color.BLACK);
 				l1.setBorder(new EmptyBorder(0, 0, 10, 0));
 

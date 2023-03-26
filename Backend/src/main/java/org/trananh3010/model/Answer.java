@@ -32,7 +32,7 @@ public class Answer implements Serializable{
 	@Column(name="content", columnDefinition = "nvarchar(max)")
 	private String content;
 	
-	private int type = 0;
+	private int loai;
 	
 	@Column(name="image", columnDefinition = "nchar(255)")
 	private String image;
@@ -40,12 +40,18 @@ public class Answer implements Serializable{
 	@Column(name="audio", columnDefinition = "nchar(255)")
 	private String audio;
 	
-	public int getType() {
-		return type;
+	private int rightt;
+	
+	@ManyToOne
+	@JoinColumn(name = "questionId")
+	private Question question;
+	
+	public int getLoai() {
+		return loai;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setLoai(int loai) {
+		this.loai = loai;
 	}
 
 	public String getImage() {
@@ -72,12 +78,6 @@ public class Answer implements Serializable{
 		this.rightt = rightt;
 	}
 
-	private int rightt;
-	
-	@ManyToOne
-	@JoinColumn(name = "questionId")
-	private Question question;
-
 	public String getId() {
 		return id;
 	}
@@ -95,26 +95,23 @@ public class Answer implements Serializable{
 	}
 
 	public int gettype() {
-		return type;
+		return loai;
 	}
 
 	public void settype(int type) {
-		this.type = type;
-	}
-
-	public Question getQuestion() {
-		return question;
+		this.loai = type;
 	}
 
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
+	
 
 	public Answer(String id, String content, int type, String image, String audio, int rightt, Question question) {
 		super();
 		this.id = id;
 		this.content = content;
-		this.type = type;
+		this.loai = type;
 		this.image = image;
 		this.audio = audio;
 		this.rightt = rightt;
@@ -133,6 +130,7 @@ public class Answer implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Answer [id=" + id + ", content=" + content + ", type=" + type + ", question=" + question + "]";
+		return "Answer [id=" + id + ", content=" + content + ", loai=" + loai + ", image=" + image + ", audio=" + audio
+				+ ", rightt=" + rightt + ", question=" + question + "]";
 	}
 }

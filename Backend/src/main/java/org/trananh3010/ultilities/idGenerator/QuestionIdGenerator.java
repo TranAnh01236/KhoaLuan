@@ -13,7 +13,7 @@ public class QuestionIdGenerator implements IdentifierGenerator {
 
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object obj) throws HibernateException {
-		String query = "SELECT id FROM Quesion";
+		String query = "SELECT id FROM Question";
 		Stream<String> ids = session.createQuery(query, String.class).stream();
 		Long max = ids.map(o -> o.replace(prefix, "")).mapToLong(Long::parseLong).max().orElse(0L);
 		return prefix + (String.format("%04d", max + 1));

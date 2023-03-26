@@ -87,7 +87,7 @@ public class GradesListView extends MyCustomPanel{
 				p1.setBorder(new EmptyBorder(15, 15, 15, 15));
 				p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 				final JLabel l1 = new JLabel(grade.getName());
-				l1.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
+				l1.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
 				l1.setForeground(new Color(255, 151, 0));
 				l1.setBorder(new EmptyBorder(0, 0, 10, 0));
 				final JLabel l2 = new JLabel(grade.getDescription());

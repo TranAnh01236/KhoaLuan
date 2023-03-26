@@ -5,22 +5,25 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.trananh3010.model.User;
 
+import jnafilechooser.api.JnaFileChooser;
 import ultilities.Constants;
 import ultilities.customView.ComponentResizer;
 import view.login.MainLoginView;
 import view.main.MainView;
 
 public class AppFrame {
-	private Dimension size = new Dimension(1366, 768);
+	private Dimension size = new Dimension(1600, 900);
 	private OutsidePanel outsidePanel;
 	private ImageIcon icCross, icSquare, icMinus, icSquare1;
 	private MainLoginView mainLoginView;
+	private MainView mainView;
 	private BorderPanel borderPanel;
 
-	class MainFrame extends JFrame {
+	public class MainFrame extends JFrame {
 		/**
 		 * 
 		 */
@@ -51,7 +54,7 @@ public class AppFrame {
 
 		@Override
 		public Dimension getPreferredSize() {
-			return new Dimension(1366, 768);
+			return new Dimension(1600, 900);
 		}
 	}
 
@@ -120,7 +123,7 @@ public class AppFrame {
 						state = 0;
 						lblMaximize.setIcon(icSquare);
 					}
-
+					
 				}
 			});
 
@@ -133,6 +136,7 @@ public class AppFrame {
 			lblMinimize.addMouseListener(new MouseAdapter() {
 				public void mouseReleased(MouseEvent e) {
 					frame.setState(Frame.ICONIFIED);
+					outsidePanel.repaint();
 				}
 			});
 
@@ -177,20 +181,20 @@ public class AppFrame {
 			setBorder(new LineBorder(Color.BLUE, 0));
 			mainPanel.setLayout(new BorderLayout());
 
-			mainLoginView = new MainLoginView(new MainLoginView.MainloginViewListener() {
-				public void login(User user) {
-					MainView mainView = new MainView();
-					mainPanel.add(mainView);
-					mainLoginView.setVisible(false);
-					borderPanel.setBackground(new Color(233, 233, 230));
-				}
-			});
-
-			mainPanel.add(mainLoginView, BorderLayout.CENTER);
+//			mainLoginView = new MainLoginView(new MainLoginView.MainloginViewListener() {
+//				public void login(User user) {
+//					MainView mainView = new MainView();
+//					mainPanel.add(mainView);
+//					mainLoginView.setVisible(false);
+//					borderPanel.setBackground(new Color(233, 233, 230));
+//				}
+//			});
+//
+//			mainPanel.add(mainLoginView, BorderLayout.CENTER);
 			
-//            MainView mainView = new MainView();
-//            borderPanel.setBackground(new Color(233, 233, 230));
-//			mainPanel.add(mainView);
+            mainView = new MainView(frame);
+            borderPanel.setBackground(new Color(233, 233, 230));
+			mainPanel.add(mainView);
 			
 		}
 	}
@@ -249,5 +253,6 @@ public class AppFrame {
 
 			}
 		});
+		
 	}
 }

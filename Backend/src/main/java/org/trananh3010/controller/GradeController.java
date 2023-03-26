@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,7 +72,7 @@ public class GradeController {
     }
 
     @DeleteMapping("/{id}")
-    public MyHttpResponse deleteUser(@PathVariable(value = "id") String gradeId)
+    public MyHttpResponse deleteGrade(@PathVariable(value = "id") String gradeId)
          throws ResourceNotFoundException {
         Grade grade = gradeRepository.findById(gradeId)
        .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + gradeId));

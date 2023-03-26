@@ -34,8 +34,6 @@ public class AuthController {
 		
 		Gson gson = new Gson();
 		MyHttpResponse myResponse = gson.fromJson(response.body(), MyHttpResponse.class);
-//		System.out.println(myResponse.toJson());
-//		User user =  new Gson().fromJson(myResponse.payloadJSON(), User.class);
 		
 		if(myResponse!= null)
 			return myResponse;

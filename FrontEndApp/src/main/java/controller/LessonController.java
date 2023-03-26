@@ -25,7 +25,6 @@ public class LessonController {
 			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
-			
 			Gson gson = new Gson();
 			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
 			List<Lesson> lessons = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Lesson>>(){}.getType());
@@ -51,7 +50,6 @@ public class LessonController {
 			Gson gson = new Gson();
 			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
 			List<Lesson> lessons = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Lesson>>(){}.getType());
-			System.out.println(response.body());
 			if (lessons != null && lessons.size()>0) {
 				return lessons;
 			}

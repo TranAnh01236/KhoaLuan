@@ -34,10 +34,6 @@ public class SubjectController {
         if (subjects!=null && subjects.size()>0) {
 			return new MyHttpResponseArray(200, "Tìm thành công", objects);
 		}
-        
-//        for (Object object : objects) {
-//			System.out.println(object);
-//		}
         return new MyHttpResponseArray(404, "Không tìm thấy", null);
 	}
 	

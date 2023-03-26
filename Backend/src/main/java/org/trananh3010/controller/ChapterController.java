@@ -28,16 +28,12 @@ public class ChapterController {
 		ArrayList<Object> objects = new ArrayList<>();
         for (int i = 0; i < chapters.size(); i++) {
 			objects.add(chapters.get(i));
-			System.out.println(objects.get(i));
 		}
         
         if (chapters!=null && chapters.size()>0) {
 			return new MyHttpResponseArray(200, "Tìm thành công", objects);
 		}
         
-//        for (Object object : objects) {
-//			System.out.println(object);
-//		}
         return new MyHttpResponseArray(404, "Không tìm thấy", null);
 	}
 	

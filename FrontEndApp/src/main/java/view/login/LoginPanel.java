@@ -185,7 +185,6 @@ public class LoginPanel extends MyCustomPanel{
 		
 		btnLogin.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
-				System.out.println("asdasd2");
 			}
 			public void keyReleased(KeyEvent e) {
 				System.out.println("asdasd1");

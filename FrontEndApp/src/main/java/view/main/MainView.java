@@ -5,9 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -19,6 +22,8 @@ import ultilities.customView.FixedStateButtonModel;
 import ultilities.customView.MyCustomButton;
 import ultilities.customView.MyCustomPanel;
 import ultilities.customView.MyCustomTextFiled;
+import view.AppFrame.MainFrame;
+import view.main.addQuestions.MainAddQuestionsView;
 import view.main.questionsList.MainQuestionsListView;
 
 public class MainView extends MyCustomPanel{
@@ -28,21 +33,25 @@ public class MainView extends MyCustomPanel{
 	 */
 	private static final long serialVersionUID = 439556263083410271L;
 	
-	private MyCustomPanel pLeft, pCenter, pSearch, pBtnSearch, pTxtSearch, pMain;
+	private MainFrame frame;
+	
+	private MyCustomPanel pLeft, pCenter, pSearch, pBtnSearch, pTxtSearch, pMain, pSearch1, pAccount;
 	private MyCustomButton btnQuestions, btnAddQuestions, btnExams;
-	private ButtonGradient btnSearch;
+	private MyCustomButton btnSearch;
 	private Box bLeft;
 	private MyCustomPanel pTitle, pQuestions, pAddQuestions, pExams;
 	private JLabel lblTitle, lblSearch;
-	private ImageIcon icBook, icOpenBook, icQuiz;
+	private ImageIcon icBook, icOpenBook, icQuiz, icSearch;
 	
 	private MyCustomTextFiled txtSearch;
 	
 	private int position = 0;
 	
 	private MainQuestionsListView mainQuestionsListView;
+	private MainAddQuestionsView mainAddQuestionsView;
 	
-	public MainView() {
+	public MainView(MainFrame frame) {
+		this.frame = frame;
 		Initialize();
 	}
 	private void Initialize() {
@@ -50,17 +59,20 @@ public class MainView extends MyCustomPanel{
 		icBook = new ImageIcon(new ImageIcon("images/books.png").getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
 		icQuiz = new ImageIcon(new ImageIcon("images/choose.png").getImage().getScaledInstance(40, 40, Image.SCALE_AREA_AVERAGING));
 		icOpenBook = new ImageIcon(new ImageIcon("images/open-book.png").getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
+		icSearch = new ImageIcon(new ImageIcon("images/search.png").getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
 		
 		pLeft = new MyCustomPanel();
 		pSearch = new MyCustomPanel();
 		pCenter = new MyCustomPanel();
 		pMain = new MyCustomPanel();
 		pBtnSearch = new MyCustomPanel();
+		pSearch1 = new MyCustomPanel();
+		pAccount = new MyCustomPanel();
 		
 		btnQuestions = new MyCustomButton();
 		btnAddQuestions = new MyCustomButton();
 		btnExams = new MyCustomButton();
-		btnSearch = new ButtonGradient();
+		btnSearch = new MyCustomButton();
 		pTxtSearch = new MyCustomPanel();
 		
 		bLeft = Box.createVerticalBox();
@@ -79,7 +91,7 @@ public class MainView extends MyCustomPanel{
 		lblTitle.setFont(new Font("Leelawadee UI", Font.BOLD, 50));
 		
 		btnQuestions.setText("Ngân hàng câu hỏi");
-		btnQuestions.setFont(new Font("Leelawadee UI", Font.BOLD, 20));
+		btnQuestions.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
 		btnQuestions.setFocusPainted(false);
 		btnQuestions.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnQuestions.setIcon(icBook);
@@ -113,7 +125,7 @@ public class MainView extends MyCustomPanel{
 		});
 		
 		btnAddQuestions.setText("Thêm câu hỏi");
-		btnAddQuestions.setFont(new Font("Leelawadee UI", Font.BOLD, 20));
+		btnAddQuestions.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
 		btnAddQuestions.setFocusPainted(false);
 		btnAddQuestions.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnAddQuestions.setIcon(icOpenBook);
@@ -148,7 +160,7 @@ public class MainView extends MyCustomPanel{
 		
 		
 		btnExams.setText("Danh sách đề thi");
-		btnExams.setFont(new Font("Leelawadee UI", Font.BOLD, 20));
+		btnExams.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
 		btnExams.setFocusPainted(false);
 		btnExams.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnExams.setIcon(icOpenBook);
@@ -215,19 +227,45 @@ public class MainView extends MyCustomPanel{
 		pLeft.add(bLeft);
 		
 		txtSearch = new MyCustomTextFiled();
-		txtSearch.setRadius(30);
+		txtSearch.setRoundTopLeft(30);
+		txtSearch.setRoundBottomLeft(30);
 		txtSearch.setBackground(new Color(233, 233, 230));
 		txtSearch.setBorder(new EmptyBorder(10, 10, 10, 10));
 		txtSearch.setForeground(new Color(31, 32, 29));
 		txtSearch.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
 		
-		btnSearch.setText("Tìm kiếm");
 		btnSearch.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
-		btnSearch.setRadius(30);
+		btnSearch.setRoundTopRight(30);
+		btnSearch.setRoundBottomRight(30);
 		btnSearch.setFocusPainted(false);
-		btnSearch.setColor1(new Color(65, 145, 222));
-		btnSearch.setColor2(new Color(65, 145, 222));
-		btnSearch.setSizeSpeed(15f);
+		btnSearch.setBackground(new Color(65, 145, 222));
+		btnSearch.setPreferredSize(new Dimension(50, txtSearch.getPreferredScrollableViewportSize().height));
+		btnSearch.setForeground(Color.WHITE);
+		btnSearch.setIcon(icSearch);
+		btnSearch.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnSearch.setModel(new FixedStateButtonModel());
+		btnSearch.addMouseListener(new MouseListener() {
+			
+			public void mouseReleased(MouseEvent e) {
+				btnSearch.setBackground(new Color(65, 145, 222));
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				btnSearch.setBackground(new Color(100, 201, 244));
+			}
+			
+			public void mouseExited(MouseEvent e) {
+
+			}
+			
+			public void mouseEntered(MouseEvent e) {
+
+			}
+			
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
 		
 		lblSearch.setText("Nhập nội dung câu hỏi để tìm kiếm");
 		lblSearch.setFont(new Font("Leelawadee UI", Font.BOLD, 12));
@@ -238,15 +276,24 @@ public class MainView extends MyCustomPanel{
 		pTxtSearch.add(txtSearch, BorderLayout.NORTH);
 		pTxtSearch.setBorder(new EmptyBorder(5, 0, 5, 0));
 		pTxtSearch.add(lblSearch, BorderLayout.CENTER);
+//		pTxtSearch.setAllBackgroundColor(Color.RED);
 		
 		pBtnSearch.add(btnSearch);
-		pBtnSearch.setBorder(new EmptyBorder(0, 15, 0, 0));
+//		pBtnSearch.setAllBackgroundColor(Color.BLUE);
+		pBtnSearch.setPreferredSize(new Dimension(btnSearch.getPreferredSize().width, pBtnSearch.getPreferredSize().height));
+		
+		pSearch1.setLayout(new BorderLayout());
+		pSearch1.add(pTxtSearch, BorderLayout.CENTER);
+		pSearch1.add(pBtnSearch, BorderLayout.EAST);
+		
+		pAccount.setBorder(new EmptyBorder(0, 0, 0, 0));
+		pAccount.setPreferredSize(new Dimension(150, pAccount.getPreferredSize().height));
 		
 		pSearch.setLayout(new BorderLayout());
 		pSearch.setAllBackgroundColor(Color.WHITE);
 		pSearch.setBorder(new EmptyBorder(0, 0, 0, 0));
-		pSearch.add(pTxtSearch, BorderLayout.CENTER);
-		pSearch.add(pBtnSearch, BorderLayout.EAST);
+		pSearch.add(pSearch1, BorderLayout.CENTER);
+		pSearch.add(pAccount, BorderLayout.EAST);
 		
 		pMain.setAllBackgroundColor(new Color(233, 233, 230));
 		pMain.setRadius(30);
@@ -282,6 +329,10 @@ public class MainView extends MyCustomPanel{
 			mainQuestionsListView.setVisible(false);
 		}
 		
+		if (mainAddQuestionsView != null) {
+			mainAddQuestionsView.setVisible(false);
+		}
+		
 		switch (pos) {
 		case 0:{
 			pQuestions.setAllBackgroundColor(new Color(233, 233, 230));
@@ -300,6 +351,14 @@ public class MainView extends MyCustomPanel{
 		case 1:{
 			pAddQuestions.setAllBackgroundColor(new Color(233, 233, 230));
 			btnAddQuestions.setForeground(new Color(65, 145, 222));
+			
+			if (mainAddQuestionsView == null) {
+				mainAddQuestionsView = new MainAddQuestionsView(frame);
+				pMain.add(mainAddQuestionsView);
+			}
+			
+			mainAddQuestionsView.setVisible(true);
+			
 			break;
 		}
 		case 2:{

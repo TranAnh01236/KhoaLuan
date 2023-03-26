@@ -101,9 +101,14 @@ public class Lesson implements Serializable{
 		this.questions = new ArrayList<>();
 	}
 
+//	@Override
+//	public String toString() {
+//		return "Lesson [id=" + id + ", name=" + name + ", description=" + description + ", chapter=" + chapter + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "Lesson [id=" + id + ", name=" + name + ", description=" + description + ", chapter=" + chapter + "]";
+		return name;
 	}
 
 }

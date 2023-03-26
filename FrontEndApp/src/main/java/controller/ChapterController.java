@@ -25,7 +25,6 @@ public class ChapterController {
 			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
-			
 			Gson gson = new Gson();
 			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
 			List<Chapter> chapters = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Chapter>>(){}.getType());
@@ -43,10 +42,8 @@ public class ChapterController {
 	}
 	
 	public List<Chapter> getChaptersBySubject(String subjectId){
-		System.out.println(subjectId);
 		try {
 			String url = Constants.getChaptersBySubjectURL + subjectId;
-			System.out.println(url);
 			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());

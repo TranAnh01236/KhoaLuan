@@ -28,6 +28,10 @@ public class Constants {
 	public static final String getAllLessonsURL = lessonsURL + "/";
 	public static final String getLessonsByChapterURL = getAllLessonsURL + "chapter/";
 	
-	public static int appHeight = 1366;
-	public static int appWidth = 768;
+	public static final String questionsURL = connectURL + "/questions";
+	public static final String getAllQuestionURL = questionsURL + "/";
+	public static final String getQuestionsByLessonURL = getAllQuestionURL + "lesson/";
+	
+	public static int appHeight = 768;
+	public static int appWidth = 1366;
 }

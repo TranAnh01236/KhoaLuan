@@ -13,15 +13,17 @@ import javax.swing.border.EmptyBorder;
 import org.trananh3010.model.Chapter;
 import org.trananh3010.model.Grade;
 import org.trananh3010.model.Lesson;
+import org.trananh3010.model.Question;
 import org.trananh3010.model.Subject;
 
 import ultilities.customView.MyCustomPanel;
 import view.main.questionsList.ChaptersListView.ChapterListViewListener;
 import view.main.questionsList.GradesListView.GradesListListener;
 import view.main.questionsList.LessonsListView.LessonsListViewListener;
+import view.main.questionsList.QuestionsListView.QuestionListViewListener;
 import view.main.questionsList.SubjectListView.SubjectsListListener;
 
-public class MainQuestionsListView extends MyCustomPanel implements GradesListListener, SubjectsListListener, ChapterListViewListener, LessonsListViewListener{
+public class MainQuestionsListView extends MyCustomPanel implements GradesListListener, SubjectsListListener, ChapterListViewListener, LessonsListViewListener, QuestionListViewListener{
 
 	/**
 	 * 
@@ -30,14 +32,15 @@ public class MainQuestionsListView extends MyCustomPanel implements GradesListLi
 
 	private MyCustomPanel pTop, pCenter, pMain;
 
-	private JLabel lblGrade, lblSubject, lblChapter, lblLesson;
-
 	private int position = 0;
+	
+	private JLabel lblBack;
 
 	private GradesListView gradesListView;
 	private SubjectListView subjectsListView;
 	private ChaptersListView chaptersListView;
 	private LessonsListView lessonsListView;
+	private QuestionsListView questionsListView;
 
 	public MainQuestionsListView() {
 		Initilize();
@@ -53,6 +56,7 @@ public class MainQuestionsListView extends MyCustomPanel implements GradesListLi
 		subjectsListView = new SubjectListView(this);
 		chaptersListView = new ChaptersListView(this);
 		lessonsListView = new LessonsListView(this);
+		questionsListView = new QuestionsListView(this);
 
 		pTop = new MyCustomPanel();
 		pCenter = new MyCustomPanel();
@@ -61,7 +65,34 @@ public class MainQuestionsListView extends MyCustomPanel implements GradesListLi
 		pTop.setLayout(new BoxLayout(pTop, BoxLayout.X_AXIS));
 		pTop.setRadius(30);
 		pTop.setAllBackgroundColor(new Color(255, 255, 255, 0));
-		pTop.setBorder(new EmptyBorder(10, 15, 10, 15));
+		pTop.setBorder(new EmptyBorder(10, 15, 0, 15));
+		
+		lblBack = new JLabel("< Quay lại");
+		lblBack.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
+		lblBack.setForeground(new Color(168, 169, 166));
+		lblBack.addMouseListener(new MouseListener() {
+			
+			public void mouseReleased(MouseEvent e) {
+				position--;
+				SwitchView();
+			}
+			
+			public void mousePressed(MouseEvent e) {
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				lblBack.setForeground(new Color(168, 169, 166));
+			}
+			
+			public void mouseEntered(MouseEvent e) {
+				lblBack.setForeground(new Color(65, 145, 222));
+			}
+			
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+
+		pTop.add(lblBack);		
 
 		pCenter.setRadius(30);
 		pCenter.setLayout(new BorderLayout());
@@ -72,119 +103,6 @@ public class MainQuestionsListView extends MyCustomPanel implements GradesListLi
 		pMain.setRadius(30);
 
 		this.setLayout(new BorderLayout());
-
-		lblGrade = new JLabel("Lớp");
-		lblGrade.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
-		lblGrade.setForeground(new Color(168, 169, 166));
-		lblGrade.addMouseListener(new MouseListener() {
-
-			public void mouseReleased(MouseEvent e) {
-				position = 0;
-				SwitchView("Lớp");
-			}
-
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			public void mouseExited(MouseEvent e) {
-				lblGrade.setForeground(new Color(168, 169, 166));
-			}
-
-			public void mouseEntered(MouseEvent e) {
-				lblGrade.setForeground(new Color(100, 201, 244));
-			}
-
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-
-		lblSubject = new JLabel("  >  Môn học");
-		lblSubject.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
-		lblSubject.setForeground(new Color(168, 169, 166));
-		lblSubject.addMouseListener(new MouseListener() {
-
-			public void mouseReleased(MouseEvent e) {
-				position = 1;
-				SwitchView("  >  Môn học");
-			}
-
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			public void mouseExited(MouseEvent e) {
-				lblSubject.setForeground(new Color(168, 169, 166));
-			}
-
-			public void mouseEntered(MouseEvent e) {
-				lblSubject.setForeground(new Color(100, 201, 244));
-			}
-
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-
-		lblChapter = new JLabel("  >  Chương");
-		lblChapter.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
-		lblChapter.setForeground(new Color(168, 169, 166));
-		lblChapter.addMouseListener(new MouseListener() {
-
-			public void mouseReleased(MouseEvent e) {
-				position = 2;
-				SwitchView("  >  Chương");
-			}
-
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			public void mouseExited(MouseEvent e) {
-				lblChapter.setForeground(new Color(168, 169, 166));
-			}
-
-			public void mouseEntered(MouseEvent e) {
-				lblChapter.setForeground(new Color(100, 201, 244));
-			}
-
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-
-		lblLesson = new JLabel("  >  Bài học");
-		lblLesson.setFont(new Font("Leelawadee UI", Font.BOLD, 16));
-		lblLesson.setForeground(new Color(168, 169, 166));
-		lblLesson.addMouseListener(new MouseListener() {
-
-			public void mouseReleased(MouseEvent e) {
-				position = 3;
-				SwitchView("  >  Bài học");
-			}
-
-			public void mousePressed(MouseEvent e) {
-
-			}
-
-			public void mouseExited(MouseEvent e) {
-				lblLesson.setForeground(new Color(168, 169, 166));
-			}
-
-			public void mouseEntered(MouseEvent e) {
-				lblLesson.setForeground(new Color(100, 201, 244));
-			}
-
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
-
-		pTop.add(lblGrade);
-		pTop.add(lblSubject);
-		pTop.add(lblChapter);
-		pTop.add(lblLesson);
 
 		pCenter.add(pMain, BorderLayout.CENTER);
 
@@ -197,68 +115,40 @@ public class MainQuestionsListView extends MyCustomPanel implements GradesListLi
 		pMain.add(subjectsListView);
 		pMain.add(chaptersListView);
 		pMain.add(lessonsListView);
+		pMain.add(questionsListView);
 
-		SwitchView("Lớp");
+		SwitchView();
 
 	}
 
-	private void SwitchView(String text) {
+	private void SwitchView() {
 		gradesListView.setVisible(false);
 		subjectsListView.setVisible(false);
 		chaptersListView.setVisible(false);
 		lessonsListView.setVisible(false);
-
-		lblGrade.setVisible(false);
-		lblSubject.setVisible(false);
-		lblChapter.setVisible(false);
-		lblLesson.setVisible(false);
-		
-		lblGrade.setForeground(new Color(168, 169, 166));
-		lblSubject.setForeground(new Color(168, 169, 166));
-		lblChapter.setForeground(new Color(168, 169, 166));
-		lblLesson.setForeground(new Color(168, 169, 166));
+		questionsListView.setVisible(false);
+		lblBack.setVisible(true);
 
 		switch (position) {
 		case 0: {
-			lblGrade.setVisible(true);
 			gradesListView.setVisible(true);
-			lblGrade.setForeground(new Color(100, 201, 244));
-			
-			lblGrade.setText("Lớp");
-			
+			lblBack.setVisible(false);
 			break;
 		}
 		case 1: {
-			lblGrade.setVisible(true);
-			lblSubject.setVisible(true);
 			subjectsListView.setVisible(true);
-			lblSubject.setForeground(new Color(100, 201, 244));
-			
-			lblSubject.setText("  >  Môn học");
-			
 			break;
 		}
 		case 2: {
-			lblGrade.setVisible(true);
-			lblSubject.setVisible(true);
-			lblChapter.setVisible(true);
 			chaptersListView.setVisible(true);
-			lblChapter.setForeground(new Color(100, 201, 244));
-			
-			lblChapter.setText("  >  Chương");
-			
 			break;
 		}
 		case 3: {
-			lblGrade.setVisible(true);
-			lblSubject.setVisible(true);
-			lblChapter.setVisible(true);
-			lblLesson.setVisible(true);
 			lessonsListView.setVisible(true);
-			lblLesson.setForeground(new Color(100, 201, 244));
-			
-			lblLesson.setText("  >  Nội dung");
-			
+			break;
+		}
+		case 4: {
+			questionsListView.setVisible(true);
 			break;
 		}
 		}
@@ -268,32 +158,29 @@ public class MainQuestionsListView extends MyCustomPanel implements GradesListLi
 	public void ItemClick(Grade grade) {
 		position = 1;
 		subjectsListView.createListSubject(grade);
-		SwitchView(grade.getName());
-		
-		lblGrade.setText(grade.getName());
-		
-//		lblSubject.setText("  >  Môn học");
-		
+		SwitchView();
 	}
 
 	public void ItemClick(Subject subject) {
 		position = 2;
 		chaptersListView.createListChapters(subject);
-		SwitchView(subject.getName());
-		
-		lblSubject.setText("  >  " + subject.getName());
+		SwitchView();
 	}
 
 	public void ItemClick(Chapter chapter) {
 		position = 3;
 		lessonsListView.createListLesson(chapter);
-		SwitchView(chapter.getName());
-		
-		lblChapter.setText("  >  " + chapter.getName());
+		SwitchView();
 	}
 
 	public void ItemClick(Lesson lesson) {
-	
+		position = 4;
+		questionsListView.createListQuestions(lesson);
+		SwitchView();
+	}
+
+	public void ItemClick(Question question) {
+		// TODO Auto-generated method stub
 		
 	}
 }
