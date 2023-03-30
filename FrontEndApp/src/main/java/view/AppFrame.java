@@ -181,20 +181,20 @@ public class AppFrame {
 			setBorder(new LineBorder(Color.BLUE, 0));
 			mainPanel.setLayout(new BorderLayout());
 
-//			mainLoginView = new MainLoginView(new MainLoginView.MainloginViewListener() {
-//				public void login(User user) {
-//					MainView mainView = new MainView();
-//					mainPanel.add(mainView);
-//					mainLoginView.setVisible(false);
-//					borderPanel.setBackground(new Color(233, 233, 230));
-//				}
-//			});
-//
-//			mainPanel.add(mainLoginView, BorderLayout.CENTER);
+			mainLoginView = new MainLoginView(new MainLoginView.MainloginViewListener() {
+				public void login(User user) {
+					Constants.saveUser(user);
+					MainView mainView = new MainView(frame);
+					mainPanel.add(mainView);
+					mainLoginView.setVisible(false);
+					borderPanel.setBackground(new Color(233, 233, 230));
+				}
+			});
+			mainPanel.add(mainLoginView, BorderLayout.CENTER);
 			
-            mainView = new MainView(frame);
-            borderPanel.setBackground(new Color(233, 233, 230));
-			mainPanel.add(mainView);
+//            mainView = new MainView(frame);
+//            borderPanel.setBackground(new Color(233, 233, 230));
+//			mainPanel.add(mainView);
 			
 		}
 	}
@@ -243,6 +243,8 @@ public class AppFrame {
 			public void componentResized(ComponentEvent e) {
 				Constants.appHeight = frame.getSize().height;
 				Constants.appWidth = frame.getSize().width;
+				outsidePanel.setVisible(false);
+				outsidePanel.setVisible(true);
 			}
 
 			public void componentMoved(ComponentEvent e) {

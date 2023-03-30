@@ -142,13 +142,13 @@ public class Question implements Serializable{
 		answers.add(answer);
 	}
 
-	public Question(String id, String content, int type, String description, String image, String audio,
+	public Question(String id, String content, int type, String explain, String image, String audio,
 			Lesson lesson, User user) {
 		super();
 		this.id = id;
 		this.content = content;
 		this.type = type;
-		this.explain = description;
+		this.explain = explain;
 		this.image = image;
 		this.audio = audio;
 		this.lesson = lesson;

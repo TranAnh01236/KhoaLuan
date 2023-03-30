@@ -223,7 +223,7 @@ public class QuestionsListView extends MyCustomPanel {
 						
 						for (int j = 0; j < url.length; j++) {
 							JLabel lblImage = new JLabel();
-							lblImage.setIcon(new ImageIcon(new ImageIcon(url[j]).getImage().getScaledInstance(350, 200, Image.SCALE_AREA_AVERAGING)));
+							lblImage.setIcon(new ImageIcon(new ImageIcon(url[j]).getImage().getScaledInstance(500, 250, Image.SCALE_AREA_AVERAGING)));
 							lblImage.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 							lblImage.setBorder(new EmptyBorder(0, 0, 10, 0));
 							p2.add(lblImage);
@@ -346,7 +346,7 @@ public class QuestionsListView extends MyCustomPanel {
 						
 						for (int h = 0; h < url.length; h++) {
 							JLabel lblImage = new JLabel();
-							lblImage.setIcon(new ImageIcon(new ImageIcon(url[h]).getImage().getScaledInstance(300, 170, Image.SCALE_AREA_AVERAGING)));
+							lblImage.setIcon(new ImageIcon(new ImageIcon(url[h]).getImage().getScaledInstance(400, 200, Image.SCALE_AREA_AVERAGING)));
 							lblImage.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 							lblImage.setBorder(new EmptyBorder(0, 0, 10, 0));
 							p2.add(lblImage);

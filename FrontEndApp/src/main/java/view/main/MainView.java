@@ -5,19 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import ultilities.customView.ButtonGradient;
 import ultilities.customView.FixedStateButtonModel;
 import ultilities.customView.MyCustomButton;
 import ultilities.customView.MyCustomPanel;
@@ -36,10 +33,10 @@ public class MainView extends MyCustomPanel{
 	private MainFrame frame;
 	
 	private MyCustomPanel pLeft, pCenter, pSearch, pBtnSearch, pTxtSearch, pMain, pSearch1, pAccount;
-	private MyCustomButton btnQuestions, btnAddQuestions, btnExams;
+	private MyCustomButton btnQuestions, btnAddQuestions, btnExams, btnAddExams;
 	private MyCustomButton btnSearch;
 	private Box bLeft;
-	private MyCustomPanel pTitle, pQuestions, pAddQuestions, pExams;
+	private MyCustomPanel pTitle, pQuestions, pAddQuestions, pExams, pAddExams;
 	private JLabel lblTitle, lblSearch;
 	private ImageIcon icBook, icOpenBook, icQuiz, icSearch;
 	
@@ -72,6 +69,7 @@ public class MainView extends MyCustomPanel{
 		btnQuestions = new MyCustomButton();
 		btnAddQuestions = new MyCustomButton();
 		btnExams = new MyCustomButton();
+		btnAddExams = new MyCustomButton();
 		btnSearch = new MyCustomButton();
 		pTxtSearch = new MyCustomPanel();
 		
@@ -81,6 +79,7 @@ public class MainView extends MyCustomPanel{
 		pQuestions = new MyCustomPanel();
 		pAddQuestions = new MyCustomPanel();
 		pExams = new MyCustomPanel();
+		pAddExams = new MyCustomPanel();
 		
 		lblTitle = new JLabel();
 		lblSearch = new JLabel();
@@ -193,6 +192,25 @@ public class MainView extends MyCustomPanel{
 			}
 		});
 		
+		btnAddExams.setText("Tạo đề thi");
+		btnAddExams.setFont(new Font("Leelawadee UI", Font.BOLD, 18));
+		btnAddExams.setFocusPainted(false);
+		btnAddExams.setBorder(new EmptyBorder(10, 10, 10, 10));
+		btnAddExams.setIcon(icOpenBook);
+		btnAddExams.setForeground(new Color(31, 32, 29));
+		btnAddExams.setRadius(30);
+		btnAddExams.setBackground(Color.WHITE);
+		btnAddExams.setHorizontalAlignment(SwingConstants.LEFT);
+		btnAddExams.setModel(new FixedStateButtonModel());
+		btnAddExams.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				super.mouseReleased(e);
+				position = 3;
+				SwitchView(position);
+			}
+		});
+		
 		pTitle.add(lblTitle);
 		pTitle.setAlignmentX(SwingConstants.LEFT);
 		
@@ -211,11 +229,17 @@ public class MainView extends MyCustomPanel{
 		pExams.setRoundBottomLeft(30);
 		pExams.setBorder(new EmptyBorder(4, 1, 4, 0));
 		
+		pAddExams.add(btnAddExams);
+		pAddExams.setRoundTopLeft(30);
+		pAddExams.setRoundBottomLeft(30);
+		pAddExams.setBorder(new EmptyBorder(4, 1, 4, 0));
+		
 		bLeft.add(pTitle);
 		bLeft.add(Box.createVerticalStrut(40));
 		bLeft.add(pQuestions);
 		bLeft.add(pAddQuestions);
 		bLeft.add(pExams);
+		bLeft.add(pAddExams);
 		
 		pLeft.setPreferredSize(new Dimension(300, pLeft.getPreferredSize().height));
 		pLeft.setBorder(new EmptyBorder(0, 3, 0, 0));
@@ -223,6 +247,7 @@ public class MainView extends MyCustomPanel{
 		btnQuestions.setPreferredSize(new Dimension(pLeft.getPreferredSize().width - 15 ,btnQuestions.getPreferredSize().height));
 		btnAddQuestions.setPreferredSize(new Dimension(pLeft.getPreferredSize().width - 15 ,btnQuestions.getPreferredSize().height));
 		btnExams.setPreferredSize(new Dimension(pLeft.getPreferredSize().width - 15 ,btnQuestions.getPreferredSize().height));
+		btnAddExams.setPreferredSize(new Dimension(pLeft.getPreferredSize().width - 15 ,btnQuestions.getPreferredSize().height));
 		
 		pLeft.add(bLeft);
 		
@@ -316,14 +341,17 @@ public class MainView extends MyCustomPanel{
 		pQuestions.setAllBackgroundColor(Color.WHITE);
 		pAddQuestions.setAllBackgroundColor(Color.WHITE);
 		pExams.setAllBackgroundColor(Color.WHITE);
+		pAddExams.setAllBackgroundColor(Color.WHITE);
 		
 		btnQuestions.setBackground(Color.WHITE);
 		btnAddQuestions.setBackground(Color.WHITE);
 		btnExams.setBackground(Color.WHITE);
+		btnAddExams.setBackground(Color.WHITE);
 		
 		btnQuestions.setForeground(new Color(31, 32, 29));
 		btnAddQuestions.setForeground(new Color(31, 32, 29));
 		btnExams.setForeground(new Color(31, 32, 29));	
+		btnAddExams.setForeground(new Color(31, 32, 29));	
 		
 		if (mainQuestionsListView != null) {
 			mainQuestionsListView.setVisible(false);
@@ -366,15 +394,22 @@ public class MainView extends MyCustomPanel{
 			btnExams.setForeground(new Color(65, 145, 222));
 			break;
 		}
+		case 3:{
+			pAddExams.setAllBackgroundColor(new Color(233, 233, 230));
+			btnAddExams.setForeground(new Color(65, 145, 222));
+			break;
+		}
 		}
 		
 		pQuestions.repaint();
 		pAddQuestions.repaint();
 		pExams.repaint();
+		pAddExams.repaint();
 		
 		btnQuestions.repaint();
 		btnAddQuestions.repaint();
 		btnExams.repaint();
+		btnAddExams.repaint();
 		
 //		pQuestions.setAllBackgroundColor(Color.BLUE);
 //		pAddQuestions.setAllBackgroundColor(Color.BLUE);
