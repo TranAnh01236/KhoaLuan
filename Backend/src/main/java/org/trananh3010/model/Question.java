@@ -62,10 +62,6 @@ public class Question implements Serializable{
 	@OneToMany(mappedBy = "question")
 	private List<ExamDetail> examDetails;
 	
-	public List<ExamDetail> getExamDetails(){
-		return this.examDetails;
-	}
-	
 	public User getUser() {
 		return user;
 	}
@@ -77,7 +73,7 @@ public class Question implements Serializable{
 	public String getId() {
 		return id;
 	}
-
+	
 	public void setId(String id) {
 		this.id = id;
 	}

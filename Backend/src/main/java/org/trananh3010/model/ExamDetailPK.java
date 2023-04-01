@@ -20,7 +20,11 @@ public class ExamDetailPK implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(exam, question);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((exam == null) ? 0 : exam.hashCode());
+		result = prime * result + ((question == null) ? 0 : question.hashCode());
+		return result;
 	}
 
 	@Override
@@ -32,7 +36,19 @@ public class ExamDetailPK implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ExamDetailPK other = (ExamDetailPK) obj;
-		return Objects.equals(exam, other.exam) && Objects.equals(question, other.question);
-	}
-
+		if (exam == null) {
+			if (other.exam != null)
+				return false;
+		} else if (!exam.equals(other.exam))
+			return false;
+		if (question == null) {
+			if (other.question != null)
+				return false;
+		} else if (!question.equals(other.question))
+			return false;
+		return true;
+	}	
+	
+	
+	
 }

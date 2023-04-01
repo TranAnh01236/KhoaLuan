@@ -10,8 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -33,38 +33,62 @@ public class User implements Serializable {
 	@GenericGenerator(name = "user_id_generator", strategy = "org.trananh3010.ultilities.idGenerator.UserIdGenerator")
 	@Column(name = "id")
 	private String id;
+	
 	@Column(name = "first_name", nullable = false)
 	private String firstName;
+	
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
-	@Column(nullable = false)
-	private String account;
+	
 	@Column(name = "email", nullable = false)
 	private String email;
-	@Column(nullable = false)
-	private String password;
-
+	
+	@Column(name = "phone_number", nullable = false)
+	private String phoneNumber;
+	
+	@Embedded
+	private Account account;
+	
+	@Column(name = "avatar", nullable = true)
+	private String avatar;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Question> questions;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Result> results;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Comment> comments;
 
-	public User() {
-		this.questions = new ArrayList<>();
-	}
-
-	public User(String id) {
-		this.id = id;
-		this.questions = new ArrayList<>();
-	}
-
-	public User(String id, String firstName, String lastName, String account, String email, String password) {
+	public User(String id, String firstName, String lastName, String email, String phoneNumber, Account account,
+			String avatar) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.account = account;
 		this.email = email;
-		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.account = account;
+		this.avatar = avatar;
 		this.questions = new ArrayList<>();
+		this.results = new ArrayList<>();
+		this.comments = new ArrayList<>();
+	}
+
+	public User(String id) {
+		super();
+		this.id = id;
+		this.questions = new ArrayList<>();
+		this.results = new ArrayList<>();
+		this.comments = new ArrayList<>();
+	}
+
+	public User() {
+		super();
+		this.questions = new ArrayList<>();
+		this.results = new ArrayList<>();
+		this.comments = new ArrayList<>();
 	}
 
 	public String getId() {
@@ -91,15 +115,7 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getAccount() {
-		return account;
-	}
-
-	public void setAccount(String account) {
-		this.account = account;
-	}
-
-	public String getEmal() {
+	public String getEmail() {
 		return email;
 	}
 
@@ -107,20 +123,40 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", account=" + account
-				+ ", phoneNumber=" + email + ", password=" + password + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phoneNumber=" + phoneNumber + ", account=" + account + ", avatar=" + avatar + "]";
 	}
-
+	
 	public String toJson() {
 		return new Gson().toJson(this);
 	}

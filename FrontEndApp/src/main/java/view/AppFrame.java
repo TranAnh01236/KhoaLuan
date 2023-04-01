@@ -181,20 +181,21 @@ public class AppFrame {
 			setBorder(new LineBorder(Color.BLUE, 0));
 			mainPanel.setLayout(new BorderLayout());
 
-			mainLoginView = new MainLoginView(new MainLoginView.MainloginViewListener() {
-				public void login(User user) {
-					Constants.saveUser(user);
-					MainView mainView = new MainView(frame);
-					mainPanel.add(mainView);
-					mainLoginView.setVisible(false);
-					borderPanel.setBackground(new Color(233, 233, 230));
-				}
-			});
-			mainPanel.add(mainLoginView, BorderLayout.CENTER);
+//			mainLoginView = new MainLoginView(new MainLoginView.MainloginViewListener() {
+//				public void login(User user) {
+//					Constants.saveUser(user);
+//					mainLoginView.setVisible(false);
+//					MainView mainView = new MainView(frame);
+//					mainPanel.add(mainView);
+//					borderPanel.setBackground(new Color(233, 233, 230));
+//					System.out.println("Chasy");
+//				}
+//			});
+//			mainPanel.add(mainLoginView, BorderLayout.CENTER);
 			
-//            mainView = new MainView(frame);
-//            borderPanel.setBackground(new Color(233, 233, 230));
-//			mainPanel.add(mainView);
+            mainView = new MainView(frame);
+            borderPanel.setBackground(new Color(233, 233, 230));
+			mainPanel.add(mainView);
 			
 		}
 	}

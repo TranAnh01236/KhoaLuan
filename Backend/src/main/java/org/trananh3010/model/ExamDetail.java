@@ -25,18 +25,7 @@ public class ExamDetail {
 	@JoinColumn(name="examId")
 	private Exam exam;
 	
-	private double scores;
-
-	public ExamDetail(Question question, Exam exam, double scores) {
-		super();
-		this.question = question;
-		this.exam = exam;
-		this.scores = scores;
-	}
-	
-	public ExamDetail() {
-		
-	}
+	private double score;
 
 	public Question getQuestion() {
 		return question;
@@ -54,16 +43,34 @@ public class ExamDetail {
 		this.exam = exam;
 	}
 
-	public double getScores() {
-		return scores;
+	public double getScore() {
+		return score;
 	}
 
-	public void setScores(double scores) {
-		this.scores = scores;
+	public void setScore(double score) {
+		this.score = score;
 	}
 
 	@Override
 	public String toString() {
-		return "ExamDetail [question=" + question + ", exam=" + exam + ", scores=" + scores + "]";
+		return "ExamDetail [question=" + question + ", exam=" + exam + ", score=" + score + "]";
 	}
+
+	public ExamDetail(Question question, Exam exam, double score) {
+		super();
+		this.question = question;
+		this.exam = exam;
+		this.score = score;
+	}
+
+	public ExamDetail() {
+		super();
+	}
+
+	public ExamDetail(Question question, double score) {
+		super();
+		this.question = question;
+		this.score = score;
+	}
+	
 }

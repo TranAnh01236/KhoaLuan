@@ -577,6 +577,7 @@ public class AddQuestionView extends MyCustomPanel {
 		scrollPane.setOpaque(true);
 
 		this.add(scrollPane);
+		this.setBorder(new EmptyBorder(15, 0, 15, 0));
 
 		LoadGrades();
 

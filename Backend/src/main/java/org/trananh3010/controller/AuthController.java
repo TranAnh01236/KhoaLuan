@@ -12,6 +12,8 @@ import org.trananh3010.model.User;
 import org.trananh3010.repository.UserRepository;
 import org.trananh3010.ultilities.MyHttpResponse;
 
+import com.google.gson.Gson;
+
 @RestController
 @RequestMapping("/auths")
 public class AuthController {
@@ -24,7 +26,7 @@ public class AuthController {
         if (user == null) {
 			return new MyHttpResponse(404, "Sai tài khoản", null);
 		}
-    	if(user.getPassword().equals(info.get("password"))) {
+    	if(user.getAccount().getPassword().trim().equals(info.get("password"))) {
     		return new MyHttpResponse(200, "Đăng nhập thành công", user);
     	}
     	return new MyHttpResponse(404, "Sai mật khẩu", null);
