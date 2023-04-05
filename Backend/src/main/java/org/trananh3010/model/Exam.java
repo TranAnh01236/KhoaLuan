@@ -1,17 +1,17 @@
 package org.trananh3010.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.trananh3010.ultilities.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,13 +46,13 @@ public class Exam implements Serializable {
 	
 	private String image;
 
-	@CreatedDate
     @Column(name = "created_at", updatable = false)
-    private Date createdAt = new Date(System.currentTimeMillis());
-
-    @LastModifiedDate
+    @Basic
+    private Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+    
     @Column(name = "updated_at")
-    private Date updatedAt = new Date(System.currentTimeMillis());
+    @Basic
+    private Timestamp updatedAt = new Timestamp(System.currentTimeMillis());
 
 	@OneToMany(mappedBy = "exam")
 	private List<ExamDetail> examDetails;
@@ -87,19 +87,6 @@ public class Exam implements Serializable {
 		this.duration = duration;
 		this.image = image;
 		this.examDetails = new ArrayList<>();
-		this.results = new ArrayList<>();
-		this.comments = new ArrayList<>();
-	}
-
-	public Exam(String id, String name, String description, int type, double duration, String image, List<ExamDetail> examDetails) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.type = type;
-		this.duration = duration;
-		this.image = image;
-		this.examDetails = examDetails;
 		this.results = new ArrayList<>();
 		this.comments = new ArrayList<>();
 	}
@@ -144,19 +131,19 @@ public class Exam implements Serializable {
 		this.duration = duration;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	

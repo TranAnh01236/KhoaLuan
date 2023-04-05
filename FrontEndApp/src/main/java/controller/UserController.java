@@ -8,8 +8,6 @@ import java.net.http.HttpResponse;
 
 import org.trananh3010.model.User;
 
-import com.google.gson.Gson;
-
 import ultilities.Constants;
 
 public class UserController {
@@ -22,8 +20,7 @@ public class UserController {
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		
-		Gson gson = new Gson();
-		User user = gson.fromJson(response.body(), User.class);
+		User user = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), User.class);
 		
 		if(user!= null)
 			return user;

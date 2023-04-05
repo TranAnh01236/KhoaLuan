@@ -19,8 +19,6 @@ import javax.swing.border.EmptyBorder;
 import org.trananh3010.model.User;
 import org.trananh3010.ultilities.MyHttpResponse;
 
-import com.google.gson.Gson;
-
 import controller.AuthController;
 import ultilities.customView.ButtonGradient;
 import ultilities.customView.MyCustomPanel;
@@ -274,7 +272,7 @@ public class LoginPanel extends MyCustomPanel{
 			if (myResponse.getStatusCode() == 200) {
 				lblError.setText("Đăng nhập thành công");
 				lblError.setForeground(new Color(0, 234, 117));
-				User user =  new Gson().fromJson(myResponse.payloadJSON(), User.class);
+				User user =  org.trananh3010.ultilities.Constants.gson.fromJson(myResponse.payloadJSON(), User.class);
 				loginPanelListener.btnLoginClicked(user);
 				return;
 			}else if(myResponse.getStatusCode() == 404) {

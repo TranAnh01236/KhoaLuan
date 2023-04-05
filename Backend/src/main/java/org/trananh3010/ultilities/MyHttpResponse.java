@@ -2,8 +2,6 @@ package org.trananh3010.ultilities;
 
 import java.io.Serializable;
 
-import com.google.gson.Gson;
-
 public class MyHttpResponse implements Serializable{
 	/**
 	 * 
@@ -49,9 +47,9 @@ public class MyHttpResponse implements Serializable{
 	}
 	
 	public String payloadJSON() {
-		return new Gson().toJson(this.payload);
+		return Constants.gson.toJson(this.payload);
 	}
 	public String toJson() {
-		return new Gson().toJson(this);
+		return Constants.gson.toJson(this);
 	}
 }

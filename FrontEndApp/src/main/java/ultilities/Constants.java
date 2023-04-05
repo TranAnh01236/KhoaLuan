@@ -7,8 +7,6 @@ import java.io.FileWriter;
 
 import org.trananh3010.model.User;
 
-import com.google.gson.Gson;
-
 public class Constants {
 	public static final String host = "localhost";
 	public static final String port = "9090";
@@ -40,6 +38,13 @@ public class Constants {
 	public static final String getAllQuestionURL = questionsURL + "/";
 	public static final String getQuestionsByLessonURL = getAllQuestionURL + "lesson/";
 	public static final String addQuestionURL = questionsURL + "/";
+	
+	public static final String examsURL = connectURL + "/exams";
+	public static final String getAllExamsURL = examsURL + "/";
+	public static final String getExamsByLesson = getAllExamsURL + "lesson/";
+	public static final String getExamsByChapter = getAllExamsURL + "chapter/";
+	public static final String getExamsBySubject = getAllExamsURL + "subject/";
+	public static final String getExamsByGrade = getAllExamsURL + "grade/";
 
 	public static int appHeight = 900;
 	public static int appWidth = 1600;
@@ -61,8 +66,7 @@ public class Constants {
 			FileReader fr = new FileReader(f);
 			BufferedReader br = new BufferedReader(fr);
 			String line = br.readLine();
-			Gson gson = new Gson();
-			User user = gson.fromJson(line, User.class);
+			User user = org.trananh3010.ultilities.Constants.gson.fromJson(line, User.class);
 //			while ((line = br.readLine()) != null) {
 //				System.out.println(line);
 //			}

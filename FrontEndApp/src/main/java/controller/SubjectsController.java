@@ -10,7 +10,6 @@ import java.util.List;
 import org.trananh3010.model.Subject;
 import org.trananh3010.ultilities.MyHttpResponseArray;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ultilities.Constants;
@@ -26,9 +25,8 @@ public class SubjectsController {
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
 			
-			Gson gson = new Gson();
-			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
-			List<Subject> subjects = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Subject>>(){}.getType());
+			MyHttpResponseArray myRes = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), MyHttpResponseArray.class);
+			List<Subject> subjects = org.trananh3010.ultilities.Constants.gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Subject>>(){}.getType());
 			
 			if (subjects != null && subjects.size()>0) {
 				return subjects;
@@ -48,9 +46,9 @@ public class SubjectsController {
 			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
-			Gson gson = new Gson();
-			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
-			List<Subject> subjects = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Subject>>(){}.getType());
+
+			MyHttpResponseArray myRes = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), MyHttpResponseArray.class);
+			List<Subject> subjects = org.trananh3010.ultilities.Constants.gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Subject>>(){}.getType());
 			if (subjects != null && subjects.size()>0) {
 				return subjects;
 			}

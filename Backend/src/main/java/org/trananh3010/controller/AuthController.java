@@ -12,8 +12,6 @@ import org.trananh3010.model.User;
 import org.trananh3010.repository.UserRepository;
 import org.trananh3010.ultilities.MyHttpResponse;
 
-import com.google.gson.Gson;
-
 @RestController
 @RequestMapping("/auths")
 public class AuthController {

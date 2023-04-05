@@ -3,8 +3,6 @@ package org.trananh3010.ultilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 public class MyHttpResponseArray {
 	private int statusCode;
 	private String Message;
@@ -39,10 +37,9 @@ public class MyHttpResponseArray {
 	}
 	
 	public String payloadJSON() {
-		return new Gson().toJson(payload);
+		return Constants.gson.toJson(this.payload);
 	}
-	
 	public String toJson() {
-		return new Gson().toJson(this);
+		return Constants.gson.toJson(this);
 	}
 }

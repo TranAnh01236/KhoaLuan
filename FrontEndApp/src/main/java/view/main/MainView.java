@@ -22,6 +22,7 @@ import ultilities.customView.MyCustomButton;
 import ultilities.customView.MyCustomPanel;
 import ultilities.customView.MyCustomTextFiled;
 import view.AppFrame.MainFrame;
+import view.main.addExams.MainAddExamsView;
 import view.main.addQuestions.MainAddQuestionsView;
 import view.main.examsList.MainExamsListView;
 import view.main.questionsList.MainQuestionsListView;
@@ -52,6 +53,7 @@ public class MainView extends MyCustomPanel{
 	private MainQuestionsListView mainQuestionsListView;
 	private MainAddQuestionsView mainAddQuestionsView;
 	private MainExamsListView mainExamsListView;
+	private MainAddExamsView mainAddExamsView;
 	
 	public MainView(MainFrame frame) {
 		this.frame = frame;
@@ -428,6 +430,10 @@ public class MainView extends MyCustomPanel{
 			mainExamsListView.setVisible(false);
 		}
 		
+		if (mainAddExamsView != null) {
+			mainAddExamsView.setVisible(false);
+		}
+		
 		switch (pos) {
 		case 0:{
 			pQuestions.setAllBackgroundColor(new Color(233, 233, 230));
@@ -472,6 +478,14 @@ public class MainView extends MyCustomPanel{
 		case 3:{
 			pAddExams.setAllBackgroundColor(new Color(233, 233, 230));
 			btnAddExams.setForeground(new Color(65, 145, 222));
+			
+			if (mainAddExamsView == null) {
+				mainAddExamsView = new MainAddExamsView();
+				pMain.add(mainAddExamsView);
+			}
+			
+			mainAddExamsView.setVisible(true);
+			
 			break;
 		}
 		}

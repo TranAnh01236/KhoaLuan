@@ -1,1 +1,16 @@
-{"id":"USER0001","firstName":"Tran","lastName":"Anh","email":"trananh@gmail.com","phoneNumber":"0332604231","account":{"account":"tuananh                                           ","password":"12345                                             ","type":0},"avatar":"","questions":[],"results":[],"comments":[]}
+{
+  "id": "USER0001",
+  "firstName": "Tran",
+  "lastName": "Anh",
+  "email": "trananh@gmail.com",
+  "phoneNumber": "0332604231",
+  "account": {
+    "account": "tuananh                                           ",
+    "password": "12345                                             ",
+    "type": 0
+  },
+  "avatar": "",
+  "questions": [],
+  "results": [],
+  "comments": []
+}

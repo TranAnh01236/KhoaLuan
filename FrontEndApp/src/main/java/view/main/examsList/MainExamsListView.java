@@ -5,30 +5,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
-import javax.print.attribute.standard.PagesPerMinute;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import org.trananh3010.model.Chapter;
-import org.trananh3010.model.Grade;
-import org.trananh3010.model.Lesson;
-import org.trananh3010.model.Subject;
+import org.trananh3010.model.Exam;
 
-import controller.ChapterController;
-import controller.GradeController;
-import controller.LessonController;
-import controller.SubjectsController;
 import ultilities.customView.MyCustomPanel;
-import ultilities.customView.comboboxSuggesion.ComboBoxSuggestion;
-import view.AppFrame.MainFrame;
-import view.main.addQuestions.AddQuestionView;
 
-public class MainExamsListView extends MyCustomPanel{
+public class MainExamsListView extends MyCustomPanel implements ExamsListView.ExamListViewListener{
 
 	/**
 	 * 
@@ -38,8 +24,7 @@ public class MainExamsListView extends MyCustomPanel{
 	private MyCustomPanel pTop, pCenter, pMain;
 	
 	private JLabel lblBack;
-	
-//	private MainFrame frame;
+
 	
 	private int position = 0;
 	
@@ -118,7 +103,7 @@ public class MainExamsListView extends MyCustomPanel{
 		switch (position) {
 		case 0:
 			if (examsListView == null) {
-				examsListView = new ExamsListView();
+				examsListView = new ExamsListView(this);
 				pMain.add(examsListView);
 			}
 			examsListView.setVisible(true);
@@ -128,6 +113,11 @@ public class MainExamsListView extends MyCustomPanel{
 		default:
 			break;
 		}
+		
+	}
+
+	public void ExamItemClick(Exam exam) {
+		// TODO Auto-generated method stub
 		
 	}
 	

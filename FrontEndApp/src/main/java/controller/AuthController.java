@@ -10,8 +10,6 @@ import java.util.HashMap;
 
 import org.trananh3010.ultilities.MyHttpResponse;
 
-import com.google.gson.Gson;
-
 import ultilities.Constants;
 
 public class AuthController {
@@ -22,7 +20,7 @@ public class AuthController {
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("account", account);
 		map.put("password", password);
-		String json = new Gson().toJson(map);
+		String json = org.trananh3010.ultilities.Constants.gson.toJson(map);
 		String url = Constants.loginURL;
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(url))
@@ -32,8 +30,7 @@ public class AuthController {
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		
-		Gson gson = new Gson();
-		MyHttpResponse myResponse = gson.fromJson(response.body(), MyHttpResponse.class);
+		MyHttpResponse myResponse = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), MyHttpResponse.class);
 		
 		if(myResponse!= null)
 			return myResponse;

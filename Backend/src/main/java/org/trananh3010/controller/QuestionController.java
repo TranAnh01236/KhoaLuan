@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.trananh3010.exception.ResourceNotFoundException;
 import org.trananh3010.model.Answer;
-import org.trananh3010.model.Grade;
 import org.trananh3010.model.Question;
 import org.trananh3010.repository.AnswerRepository;
 import org.trananh3010.repository.QuestionRepository;

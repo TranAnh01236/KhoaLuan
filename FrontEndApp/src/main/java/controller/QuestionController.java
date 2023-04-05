@@ -6,15 +6,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
-import java.util.HashMap;
 import java.util.List;
 
-import org.trananh3010.model.Lesson;
 import org.trananh3010.model.Question;
 import org.trananh3010.ultilities.MyHttpResponse;
 import org.trananh3010.ultilities.MyHttpResponseArray;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ultilities.Constants;
@@ -30,9 +27,8 @@ public class QuestionController {
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
 			
-			Gson gson = new Gson();
-			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
-			List<Question> questions = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Question>>(){}.getType());
+			MyHttpResponseArray myRes = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), MyHttpResponseArray.class);
+			List<Question> questions = org.trananh3010.ultilities.Constants.gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Question>>(){}.getType());
 			
 			if (questions != null && questions.size()>0) {
 				return questions;
@@ -52,9 +48,9 @@ public class QuestionController {
 			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create(url)).build();
 			HttpClient client = HttpClient.newBuilder().build();
 			HttpResponse<String> response = client.send(request,  HttpResponse.BodyHandlers.ofString());
-			Gson gson = new Gson();
-			MyHttpResponseArray myRes = gson.fromJson(response.body(), MyHttpResponseArray.class);
-			List<Question> questions = gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Question>>(){}.getType());
+
+			MyHttpResponseArray myRes = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), MyHttpResponseArray.class);
+			List<Question> questions = org.trananh3010.ultilities.Constants.gson.fromJson(myRes.payloadJSON(), new TypeToken<List<Question>>(){}.getType());
 			if (questions != null && questions.size()>0) {
 				return questions;
 			}
@@ -68,7 +64,7 @@ public class QuestionController {
 	}
 	
 	public MyHttpResponse saveQuestion(Question question) throws IOException, InterruptedException {
-		String json = new Gson().toJson(question);
+		String json = org.trananh3010.ultilities.Constants.gson.toJson(question);
 		String url = Constants.addQuestionURL;
 		HttpRequest request = HttpRequest.newBuilder()
 				.uri(URI.create(url))
@@ -78,8 +74,7 @@ public class QuestionController {
 		HttpClient client = HttpClient.newBuilder().build();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		
-		Gson gson = new Gson();
-		MyHttpResponse myResponse = gson.fromJson(response.body(), MyHttpResponse.class);
+		MyHttpResponse myResponse = org.trananh3010.ultilities.Constants.gson.fromJson(response.body(), MyHttpResponse.class);
 		
 		if(myResponse!= null)
 			return myResponse;

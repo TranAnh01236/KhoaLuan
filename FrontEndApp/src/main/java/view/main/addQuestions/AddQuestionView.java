@@ -172,6 +172,7 @@ public class AddQuestionView extends MyCustomPanel {
 		cbbGrades = new ComboBoxSuggestion<Grade>();
 		cbbGrades.setFont(new Font("Leelawadee UI", Font.PLAIN, 16));
 		cbbGrades.setEditable(false);
+		cbbGrades.setFocusable(false);
 		Box b1 = Box.createHorizontalBox();
 		JLabel lblGrades = new JLabel("Lớp:");
 		lblGrades.setPreferredSize(new Dimension(120, lblGrades.getPreferredSize().height));
@@ -189,6 +190,7 @@ public class AddQuestionView extends MyCustomPanel {
 		cbbSubjects = new ComboBoxSuggestion<Subject>();
 		cbbSubjects.setFont(new Font("Leelawadee UI", Font.PLAIN, 16));
 		cbbSubjects.setEditable(false);
+		cbbSubjects.setFocusable(false);
 		Box b2 = Box.createHorizontalBox();
 		JLabel lblSubjects = new JLabel("Môn học:");
 		lblSubjects.setPreferredSize(new Dimension(120, lblGrades.getPreferredSize().height));
@@ -206,6 +208,7 @@ public class AddQuestionView extends MyCustomPanel {
 		cbbChapters = new ComboBoxSuggestion<Chapter>();
 		cbbChapters.setFont(new Font("Leelawadee UI", Font.PLAIN, 16));
 		cbbChapters.setEditable(false);
+		cbbChapters.setFocusable(false);
 		Box b3 = Box.createHorizontalBox();
 		JLabel lblChapters = new JLabel("Chương:");
 		lblChapters.setPreferredSize(new Dimension(120, lblGrades.getPreferredSize().height));
@@ -223,6 +226,7 @@ public class AddQuestionView extends MyCustomPanel {
 		cbbLessons = new ComboBoxSuggestion<Lesson>();
 		cbbLessons.setFont(new Font("Leelawadee UI", Font.PLAIN, 16));
 		cbbLessons.setEditable(false);
+		cbbLessons.setFocusable(false);
 		Box b4 = Box.createHorizontalBox();
 		JLabel lblLessons = new JLabel("Nội dung:");
 		lblLessons.setPreferredSize(new Dimension(120, lblGrades.getPreferredSize().height));

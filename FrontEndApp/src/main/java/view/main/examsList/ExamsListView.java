@@ -4,18 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import org.trananh3010.model.Chapter;
@@ -25,9 +33,12 @@ import org.trananh3010.model.Lesson;
 import org.trananh3010.model.Subject;
 
 import controller.ChapterController;
+import controller.ExamController;
 import controller.GradeController;
 import controller.LessonController;
 import controller.SubjectsController;
+import ultilities.customView.FixedStateButtonModel;
+import ultilities.customView.MyCustomButton;
 import ultilities.customView.MyCustomPanel;
 import ultilities.customView.comboboxSuggesion.ComboBoxSuggestion;
 
@@ -44,8 +55,6 @@ public class ExamsListView extends MyCustomPanel{
 	private ComboBoxSuggestion<Subject> cbbSubjects;
 	private ComboBoxSuggestion<Chapter> cbbChapters;
 	private ComboBoxSuggestion<Lesson> cbbLessons;
-
-	private JScrollPane scrollPane;
 
 	private DefaultComboBoxModel<Grade> gradesModel;
 	private DefaultComboBoxModel<Subject> subjectsModel;
@@ -64,9 +73,26 @@ public class ExamsListView extends MyCustomPanel{
 	private ChapterController chapterController;
 	private LessonController lessonController;
 	
-	private ImageIcon icFilter;
+	private ExamController examController;
 	
-	public ExamsListView() {
+	private ImageIcon icFilter;
+
+	private JScrollPane scrollPane;
+	
+	private GridLayout gridLayout;
+
+	private MyCustomPanel pListExams;
+	
+	private ImageIcon icExam, icClock, icSee;
+	
+	private ExamListViewListener examListViewListener;
+	
+	public interface ExamListViewListener{
+		void ExamItemClick(Exam exam);
+	}
+	
+	public ExamsListView(ExamListViewListener listener) {
+		this.examListViewListener = listener;
 		Initialize();
 	}
 	
@@ -79,8 +105,12 @@ public class ExamsListView extends MyCustomPanel{
 		subjectsController = new SubjectsController();
 		chapterController = new ChapterController();
 		lessonController = new LessonController();
+		examController = new ExamController();
 		
 		icFilter = new ImageIcon(new ImageIcon("images/filter.png").getImage().getScaledInstance(16, 16, Image.SCALE_AREA_AVERAGING));
+		icExam = new ImageIcon(new ImageIcon("images/exam.png").getImage().getScaledInstance(275, 150, Image.SCALE_AREA_AVERAGING));
+		icClock = new ImageIcon(new ImageIcon("images/update.png").getImage().getScaledInstance(16, 16, Image.SCALE_AREA_AVERAGING));
+		icSee = new ImageIcon(new ImageIcon("images/see.png").getImage().getScaledInstance(16, 16, Image.SCALE_AREA_AVERAGING));
 		
 		pLeft = new MyCustomPanel();
 		pLeft.setRadius(30);
@@ -118,6 +148,7 @@ public class ExamsListView extends MyCustomPanel{
 		pCbbGrades.add(cbbGrades, BorderLayout.CENTER);
 		cbbGrades.setPreferredSize(cbbGrades.getPreferredSize());
 		cbbGrades.setEditable(false);
+		cbbGrades.setFocusable(false);
 		cbbGrades.setForeground(new Color(31, 32, 29));
 		cbbGrades.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
 		gradesModel = new DefaultComboBoxModel<Grade>();
@@ -155,6 +186,7 @@ public class ExamsListView extends MyCustomPanel{
 		pCbbSubject.add(cbbSubjects, BorderLayout.CENTER);
 		cbbSubjects.setPreferredSize(cbbGrades.getPreferredSize());
 		cbbSubjects.setEditable(false);
+		cbbSubjects.setFocusable(false);
 		cbbSubjects.setForeground(new Color(31, 32, 29));
 		cbbSubjects.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
 		subjectsModel = new DefaultComboBoxModel<Subject>();
@@ -191,6 +223,7 @@ public class ExamsListView extends MyCustomPanel{
 		pCbbChapter.add(cbbChapters, BorderLayout.CENTER);
 		cbbChapters.setPreferredSize(cbbGrades.getPreferredSize());
 		cbbChapters.setEditable(false);
+		cbbChapters.setFocusable(false);
 		cbbChapters.setForeground(new Color(31, 32, 29));
 		cbbChapters.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
 		chaptersModel = new DefaultComboBoxModel<Chapter>();
@@ -227,10 +260,18 @@ public class ExamsListView extends MyCustomPanel{
 		pCbbLesson.add(cbbLessons, BorderLayout.CENTER);
 		cbbLessons.setPreferredSize(cbbGrades.getPreferredSize());
 		cbbLessons.setEditable(false);
+		cbbLessons.setFocusable(false);
 		cbbLessons.setForeground(new Color(31, 32, 29));
 		cbbLessons.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
 		lessonsModel = new DefaultComboBoxModel<Lesson>();
 		cbbLessons.setModel(lessonsModel);
+		cbbLessons.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (cbbGrades.getItemAt(0) != null && cbbSubjects.getItemAt(0) != null && cbbChapters.getItemAt(0) != null && cbbLessons.getItemAt(0) != null) {
+					loadExams();
+				}
+			}
+		});
 		
 		MyCustomPanel pBorderLesson = new MyCustomPanel();
 		MyCustomPanel pBorderLesson1 = new MyCustomPanel();
@@ -278,6 +319,23 @@ public class ExamsListView extends MyCustomPanel{
 		pMain = new MyCustomPanel();
 		pMain.setRadius(30);
 		pMain.setAllBackgroundColor(Color.WHITE);
+		pMain.setLayout(new BorderLayout());
+		pMain.setBorder(new EmptyBorder(15, 15, 15, 0));
+		
+		pListExams = new MyCustomPanel();
+		pListExams.setAllBackgroundColor(Color.WHITE);
+		pListExams.setBorder(new EmptyBorder(0, 0, 0, 15));
+		
+		gridLayout = new GridLayout(0,3);
+		
+		pListExams.setLayout(gridLayout);
+		
+		scrollPane = new JScrollPane(pListExams, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		scrollPane.setOpaque(true);
+		
+		pMain.add(scrollPane, BorderLayout.CENTER);
 		
 		pCenter.add(pMain, BorderLayout.CENTER);
 		
@@ -285,6 +343,8 @@ public class ExamsListView extends MyCustomPanel{
 		this.add(pCenter, BorderLayout.CENTER);
 		
 		LoadGrade();
+		
+//		loadExams();
 	}
 	
 	private void LoadGrade() {
@@ -307,6 +367,9 @@ public class ExamsListView extends MyCustomPanel{
 				gradesModel.addElement(grade);
 			}
 		}
+		
+//		lstExams = examController.getAllExams();
+//		loadExams();
 	}
 	
 	private void loadSubjects(Grade grade) {
@@ -330,6 +393,7 @@ public class ExamsListView extends MyCustomPanel{
 				subjectsModel.addElement(subject);
 			}
 		}
+
 	}
 	
 	private void loadChapters(Subject subject) {
@@ -370,14 +434,129 @@ public class ExamsListView extends MyCustomPanel{
 			for (Lesson lesson : lstLessons) {
 				lessonsModel.addElement(lesson);
 			}
+			cbbLessons.setSelectedIndex(0);
 		}
 	}
 	
 	private void loadExams() {
+		
+		System.out.println("Chạy Chạy Chạy Chạy Chạy");
+		
+		pListExams.setVisible(false);
+		pListExams.removeAll();
+		gridLayout.setVgap(15);
+		gridLayout.setHgap(15);
+		
 		lstExams = new ArrayList<Exam>();
-		if (cbbLessons.getSelectedIndex() != 0) {
-			
+		
+		if (cbbLessons.getSelectedIndex() == 0) {
+			if (cbbChapters.getSelectedIndex() == 0) {
+				if (cbbSubjects.getSelectedIndex() == 0) {
+					if (cbbGrades.getSelectedIndex() == 0) {
+						lstExams = examController.getAllExams();
+					}else {
+						Grade grade = (Grade) cbbGrades.getSelectedItem();
+						lstExams = examController.getExamsByGrade(grade.getId());
+					}
+				}else {
+					Subject subject = (Subject) cbbSubjects.getSelectedItem();
+					lstExams = examController.getExamsBySubject(subject.getId());
+				}
+			}else {
+				Chapter chapter = (Chapter) cbbChapters.getSelectedItem();
+				lstExams = examController.getExamsByChapter(chapter.getId());
+			}
+		}else {
+			Lesson lesson = (Lesson) cbbLessons.getSelectedItem();
+			lstExams = examController.getExamsByLesson(lesson.getId());
 		}
+		
+		if (lstExams != null && lstExams.size() > 0) {
+			for (Exam e : lstExams) {
+				final Exam exam = e;
+				
+				MyCustomPanel p0 = new MyCustomPanel();
+				p0.setAllBackgroundColor(Color.WHITE);
+				p0.setLayout(new BorderLayout());
+				p0.setRadius(30);
+				
+				MyCustomPanel p1 = new MyCustomPanel();
+				p1.setRadius(30);
+				p1.setAllBackgroundColor(new Color(233, 233, 230));
+				p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+				p1.setBorder(new EmptyBorder(15, 15, 15, 15));
+				
+				JLabel lblImage = new JLabel();
+				if (exam.getImage() != null && !exam.getImage().trim().equals("")) {
+					try {
+						File file = new File(exam.getImage());
+						Image image = ImageIO.read(file);
+						image = image.getScaledInstance(275, 150, Image.SCALE_AREA_AVERAGING);
+						lblImage.setIcon(new ImageIcon(image));
+					} catch (IOException e1) {
+						lblImage.setIcon(icExam);
+						e1.printStackTrace();
+					}
+				}else
+					lblImage.setIcon(icExam);
+				
+				Box bImage = Box.createHorizontalBox();
+				bImage.add(Box.createHorizontalGlue());
+				bImage.add(lblImage);
+				bImage.add(Box.createHorizontalGlue());
+				
+				JTextArea lblName = new JTextArea(exam.getName());
+				lblName.setWrapStyleWord(true);
+				lblName.setLineWrap(true);
+				lblName.setFont(new Font("Leelawadee UI", Font.BOLD, 15));
+				lblName.setBackground(new Color(233, 233, 230));
+				lblName.setOpaque(true);
+				lblName.setEditable(false);
+				lblName.setFocusable(false);
+				Box bName = Box.createHorizontalBox();
+				bName.add(lblName);
+				bName.add(Box.createHorizontalGlue());
+				
+				MyCustomButton btnDetails = new MyCustomButton();
+				btnDetails.setText("Xem chi tiết");
+				btnDetails.setFont(new Font("Leelawadee UI", Font.BOLD, 15));
+				btnDetails.setBackground(new Color(65, 145, 222));
+				btnDetails.setModel(new FixedStateButtonModel());
+				btnDetails.setBorder(new EmptyBorder(5,15,5,15));
+				btnDetails.setRadius(10);
+				btnDetails.setForeground(Color.WHITE);
+				btnDetails.setFocusPainted(false);
+				btnDetails.setIcon(icSee);
+				btnDetails.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						super.mouseReleased(e);
+						examListViewListener.ExamItemClick(exam);
+					}
+				});
+				
+				String date = exam.getUpdatedAt().getDate() + "/" + exam.getUpdatedAt().getMonth() + "/" + (exam.getUpdatedAt().getYear() + 1900);
+				JLabel lblUpdateAt = new JLabel(date);
+				lblUpdateAt.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
+				lblUpdateAt.setIcon(icClock);
+				
+				Box bBtn = Box.createHorizontalBox();
+				bBtn.add(btnDetails);
+				bBtn.add(Box.createHorizontalGlue());
+				bBtn.add(lblUpdateAt);
+				
+				p1.add(bImage);
+				p1.add(Box.createVerticalStrut(10));
+				p1.add(bName);
+				p1.add(Box.createVerticalStrut(10));
+				p1.add(bBtn);
+				
+				p0.add(p1, BorderLayout.NORTH);
+				
+				pListExams.add(p0);
+			}
+		}
+		pListExams.setVisible(true);
 	}
 	
 }

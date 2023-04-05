@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.trananh3010.ultilities.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.Gson;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -158,6 +158,6 @@ public class User implements Serializable {
 	}
 	
 	public String toJson() {
-		return new Gson().toJson(this);
+		return Constants.gson.toJson(this);
 	}
 }
